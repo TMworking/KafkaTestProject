@@ -1,0 +1,25 @@
+spring:
+  kafka:
+    topics:
+      - name: weather-topic
+        num-partitions: 3
+        replication-factor: 1
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        enable.idempotence: true
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: my-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+
+weather:
+  temperature:
+    min: 0
+    max: 35
